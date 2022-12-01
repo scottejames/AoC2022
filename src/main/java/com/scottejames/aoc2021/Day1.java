@@ -38,6 +38,19 @@ public class Day1 extends AbstractDay {
 
     @Override
     public String solvePart2() {
-        return "TWO";
+        List<Integer> input = getListInteger();
+
+        Integer prior = Integer.MAX_VALUE;
+        Integer count = 0;
+
+
+        for (int i = 0; i < input.size()-2;i++){
+            int curr = input.get(i) + input.get(i+1) + input.get(i+2);
+
+            if (curr > prior) count++;
+            prior = curr;
+        }
+
+        return String.valueOf(count);
     }
 }

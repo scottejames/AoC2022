@@ -26,6 +26,12 @@ public abstract class AbstractDay {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getListString(){
+        return getInput()
+                .lines()
+                .collect(Collectors.toList());
+    }
+
     /**
      * Returns the solution to part 1 of the puzzle.
      * @return the solution to part 1 of the puzzle

@@ -55,7 +55,7 @@ public class InputFetch {
     }
     public String fetchPuzzleInputRemote(int day) throws IOException {
         var request = new Request.Builder()
-                .url(getRemotePuzzleInputUrl(1))
+                .url(getRemotePuzzleInputUrl(day))
                 .header(HttpHeaders.COOKIE, "session=" + getSessionToken())
                 .get()
                 .build();
@@ -73,13 +73,13 @@ public class InputFetch {
     }
 
     HttpUrl getRemotePuzzleInputUrl(int day) {
-        return HttpUrl.get("https://adventofcode.com/2021/day/" + day + "/input");
+        LOG.info("Getting info for {} ", day);
+        return HttpUrl.get("https://adventofcode.com/2022/day/" + day + "/input");
     }
     synchronized String  getSessionToken() throws IOException {
         try {
             if (_sessionToken == null) {
                 _sessionToken = Files.readString(Path.of("src/main/cookie.txt")).trim();
-                System.out.println("Content of cookie.txt : " + _sessionToken);
             }
             return _sessionToken;
         } catch (IOException e) {
