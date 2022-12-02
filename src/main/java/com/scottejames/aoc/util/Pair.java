@@ -1,5 +1,7 @@
 package com.scottejames.aoc.util;
 
+import java.util.Objects;
+
 public class Pair<LHS,RHS>{
 
     LHS lhs;
@@ -16,6 +18,19 @@ public class Pair<LHS,RHS>{
                 "lhs=" + lhs +
                 ", rhs=" + rhs +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(lhs, pair.lhs) && Objects.equals(rhs, pair.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lhs, rhs);
     }
 
     public LHS getLhs() {

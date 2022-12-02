@@ -42,7 +42,7 @@ public class Day1 extends AbstractDay {
                 currCal += i;
             }
         }
-        Collections.sort(cals,Collections.reverseOrder());
+        cals.sort(Collections.reverseOrder());
         return cals;
     }
     @Override
