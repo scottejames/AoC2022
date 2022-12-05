@@ -36,7 +36,7 @@ public class Day4 extends AbstractDay {
         for (String s: input){
             Integer[] data = parse(s);
             if ((data[0] <= data[2] && data[1] >= data[3]) ||
-                (data[2] <= data[0] && data[3] >= data[1])){
+                (data[2] <= data[0] && data[3] >= data[1])) {
                 result += 1;
             }
         }
@@ -49,6 +49,8 @@ public class Day4 extends AbstractDay {
         int result = 0;
         for (String s: input){
             Integer[] data = parse(s);
+            // a - b & c - d
+            // a <= d && c <= b - overlap
             if ((data[0] <= data[3]) && (data[2] <= data[1])){
                 result += 1;
             }

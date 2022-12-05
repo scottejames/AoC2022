@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String [] args) throws IOException {
-        AbstractDay day = new Day4();
+        AbstractDay day = new Day5();
 
         String solnOne = day.solvePart1();
         String solnTwo = day.solvePart2();
