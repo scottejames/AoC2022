@@ -66,7 +66,7 @@ public class Day5 extends AbstractDay {
             int from = Integer.parseInt(strs[3]) - 1;
             int to = Integer.parseInt(strs[5]) - 1;
             ArrayDeque<Character> temp = new ArrayDeque<>();
-          
+
             for (int i = 0; i < move; i++) {
                 Character c = crates.get(from).pop();
                 temp.addFirst(c);
