@@ -8,12 +8,14 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String [] args) throws IOException {
-        AbstractDay day = new Day7();
+        AbstractDay day = new Day9();
 
         String solnOne = day.solvePart1();
         String solnTwo = day.solvePart2();
 
         System.out.println("Part 1: " +  solnOne);
         System.out.println("Part 2: " +  solnTwo);
+
+
     }
 }

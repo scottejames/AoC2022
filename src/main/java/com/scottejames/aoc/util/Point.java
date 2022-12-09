@@ -1,12 +1,14 @@
 package com.scottejames.aoc.util;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Point {
     public int x;
     public int y;
 
+    public Point(){
+        this.x=0;
+        this.y=0;
+    }
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
@@ -38,8 +40,15 @@ public class Point {
         }
         return result;
     }
+    public Point add(int x , int y){
+        return add(new Point(x,y));
+    }
     public Point add(Point p) {
         return new Point(x + p.x, y + p.y);
+    }
+
+    public Point delta(Point b){
+        return new Point(x- b.x , y - b.y );
     }
     public Point multiply(int i) {
         return new Point (x*i , y*i);
@@ -67,6 +76,25 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public Set<Point> getNeighbours() {
+        Set<Point> result = new HashSet<>();
+        result.add(new Point(x + 1, y));
+        result.add(new Point(x - 1, y));
+        result.add(new Point(x + 1, y - 1));
+        result.add(new Point(x - 1, y - 1));
+        result.add(new Point(x + 1, y + 1));
+        result.add(new Point(x - 1, y + 1));
+        result.add(new Point(x, y + 1));
+        result.add(new Point(x, y - 1));
+        return result;
+    }
+
+    public boolean adjacent(Point p){
+        Set<Point> n = getNeighbours();
+        n.add(this); // touching could be overlapping
+        return n.contains(p);
     }
 
 
