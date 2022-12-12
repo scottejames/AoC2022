@@ -22,4 +22,17 @@ public enum Direction {
             default -> throw new IllegalArgumentException("Unknown direction: " + c);
         };
     }
+    public static Direction direction(Point from, Point to){
+        Point dist = from.delta(to);
+        if ((dist.x> 0) && (dist.y>0)) throw new IllegalStateException("Not a cardinal direction " + dist);
+        if (dist.y < 0)
+            return RIGHT;
+        if (dist.y > 0)
+            return LEFT;
+        if (dist.x > 0)
+            return UP;
+        if (dist.x < 0)
+            return DOWN;
+        throw new IllegalStateException("Not a cardinal direction " + dist);
+    };
 }

@@ -119,4 +119,6 @@ public enum CardinalDirection {
     public static CardinalDirection[] eightDirections() {
         return new CardinalDirection[]{NORTH, NORTHEAST, EAST, EASTSOUTH, SOUTH, SOUTHWEST, WEST, WESTNORTH};
     }
+
+
 }

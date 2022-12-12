@@ -1,5 +1,6 @@
 package com.scottejames.aoc.util;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Point {
     public int x;
@@ -91,7 +92,25 @@ public class Point {
         return result;
     }
 
-    public boolean adjacent(Point p){
+    public Set<Point> getNeighboursPositive(){
+        return getNeighbours().stream().filter(t->(t.x>=0) && (t.y>=0)).collect(Collectors.toSet());
+    }
+
+    public Set<Point> getCartNeighbours(){
+        Set<Point> result = new HashSet<>();
+        result.add(new Point(x + 1, y));
+        result.add(new Point(x - 1, y));
+        result.add(new Point(x, y + 1));
+        result.add(new Point(x, y - 1));
+        return result;
+    }
+    public Set<Point> getCartNeighboursPositive() {
+        return getCartNeighbours().stream().filter(t->(t.x>=0) && (t.y>=0)).collect(Collectors.toSet());
+
+    }
+
+
+        public boolean adjacent(Point p){
         Set<Point> n = getNeighbours();
         n.add(this); // touching could be overlapping
         return n.contains(p);
