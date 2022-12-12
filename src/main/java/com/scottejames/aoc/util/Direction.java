@@ -25,14 +25,27 @@ public enum Direction {
     public static Direction direction(Point from, Point to){
         Point dist = from.delta(to);
         if ((dist.x> 0) && (dist.y>0)) throw new IllegalStateException("Not a cardinal direction " + dist);
-        if (dist.y < 0)
-            return RIGHT;
-        if (dist.y > 0)
-            return LEFT;
-        if (dist.x > 0)
-            return UP;
         if (dist.x < 0)
+            return RIGHT;
+        if (dist.x > 0)
+            return LEFT;
+        if (dist.y > 0)
+            return UP;
+        if (dist.y < 0)
             return DOWN;
         throw new IllegalStateException("Not a cardinal direction " + dist);
     };
+    public static char toChar(Direction d){
+        char c = switch ( d ) {
+            case LEFT -> '<';
+            case RIGHT -> '>';
+            case UP -> '^';
+            case DOWN -> 'v';
+        };
+        return c;
+    }
+    public static char directionToChar(Point from, Point to){
+        Direction c = direction(from,to);
+        return toChar(c);
+    }
 }

@@ -1,20 +1,17 @@
 package com.scottejames.aoc2022;
 
 import com.scottejames.aoc.util.AbstractDay;
-import com.scottejames.aoc.util.Direction;
 import com.scottejames.aoc.util.Grid;
 import com.scottejames.aoc.util.Point;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Day12 extends AbstractDay {
+
     private List<String> sample = List.of(
-        "Sabqponm", "abcryxxl", "accszExk", "acctuvwj", "abdefghi");
+            "Sabqponm", "abcryxxl", "accszExk", "acctuvwj", "abdefghi");
     private Grid<Character> grid = new Grid<>();
 
     public Day12() throws IOException {
@@ -24,46 +21,58 @@ public class Day12 extends AbstractDay {
     }
     @Override
     public String solvePart1() {
-        Point start = grid.locate('S');
-        Point end = grid.locate('E');
-        List<Point> path = new ArrayList<>();
-        distance(start,end,path);
-       printPath(path);
-        return String.valueOf(path.size());
+            Point start = grid.locate('S');
+            Point end = grid.locate('E');
+            int length = length(start, grid);
+
+            return String.valueOf(length);
     }
 
     @Override
     public String solvePart2() {
-        return null;
+        List<Point> allA = grid.getAllDataMatching('a');
+        int distance = allA.parallelStream().mapToInt(p -> length(p,grid)).min().orElseThrow();
+        return String.valueOf(distance);
+    }
+    private void parse(List<String> input) {
+        int row = 0;
+        int column = 0;
+        for (String s: input){
+            for(char c: s.toCharArray()) {
+                grid.add(new Point(column,row),c);
+                column++;
+            }
+            row++;
+            column=0;
+        }
     }
 
-    public List<Point> distance(Point start, Point end, List<Point> path){
-        if (start.equals(end)){
-            return path; // Yay
-        }
-        path.add(start);
-        Set<Point> paths = start.getCartNeighboursPositive();
-        paths = paths.stream().filter(p->(grid.withinGrid(p)==true)).collect(Collectors.toSet());
-        for (Point next: paths){
-            if (path.contains(next)){
-                continue;
-            }
-            if (isValid(start,next)){
-                return distance(next,end,path);
+    public int length(Point start, Grid<Character> grid) {
+        Set<Point> visited = new HashSet<>();
+        ArrayDeque<Path> queue = new ArrayDeque<>();
+        queue.add(new Path(start, 0));
+        while (!queue.isEmpty() && grid.get(queue.peek().end()) != 'E') {
+            var next = queue.poll();
+            for(var c:getNeighbours(next.end(),grid)){
+                if (!visited.contains(c))
+                    queue.add(new Path(c, next.stepCount() + 1));
+                    visited.add(c);
             }
         }
-        return null;
+        if (queue.isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+        return queue.poll().stepCount();
     }
 
-    private void printPath(List<Point> path){
-        Point from = path.get(0);
-        StringJoiner s = new StringJoiner(", ");
-        for (int i =1 ; i< path.size(); i++){
-            Point to = path.get(i);
-            s.add("" + Direction.direction(from,to));
-            from = to;
-        }
-        System.out.println(s.toString());
+    public Set<Point> getNeighbours(Point point,Grid<Character>grid) {
+        Set<Point> paths = point.getCartNeighboursPositive();
+        paths = paths.stream().
+                filter(p->(grid.withinGrid(p)==true)).
+                filter(p->isValid(point,p)).
+                collect(Collectors.toSet());
+
+        return paths;
     }
     public boolean isValid(Point from, Point to){
         char fromChar = grid.get(from);
@@ -73,22 +82,6 @@ public class Day12 extends AbstractDay {
         return (int) toChar <= (int) fromChar + 1;
 
     }
-    private void parse(List<String> input) {
-        int row = 0;
-        int column = 0;
-        for (String s: input){
-            for(char c: s.toCharArray()) {
-                grid.add(new Point(row,column),c);
-                column++;
-            }
-            row++;
-            column=0;
-        }
-        grid.showGrid();
+    private static final record Path(Point end, int stepCount) {
     }
-
-
-
-
-
 }

@@ -10,6 +10,7 @@ public class Grid<T> {
     public void Grid() {
     }
 
+
     public void add(Point p, T value) {
         if (p.x > width) width = p.x;
         if (p.y > height) height = p.y;
@@ -122,6 +123,15 @@ public class Grid<T> {
         }
     }
 
+    public List<Point> getAllDataMatching(T m){
+        var result = new ArrayList<Point>();
+        for(Point p: getAllPoints()){
+            if (get(p) == m){
+                result.add(p);
+            }
+        }
+        return result;
+    }
     public List<T> getAllData(){
         var results = new ArrayList<T>();
         for (Point key: _data.keySet()){
