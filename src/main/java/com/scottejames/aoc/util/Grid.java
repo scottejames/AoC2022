@@ -20,7 +20,7 @@ public class Grid<T> {
         if (p.x > width) width = p.x;
         if (p.y > height) height = p.y;
         if (_data.get(p) == null) {
-            throw new NoSuchElementException("No element at (" + p + ")");
+            return null;
         }
         return _data.get(p);
     }
@@ -87,7 +87,7 @@ public class Grid<T> {
 
     public void setListOfPoints(List<Point> points, T e){
         for (Point p : points) {
-            _data.put(p,e);
+            this.add(p,e);
         }
     }
 
@@ -122,7 +122,19 @@ public class Grid<T> {
             System.out.println("");
         }
     }
+    public void showGrid(int minX, int maxX, int minY, int maxY) {
 
+        for (int y = minY; y <= maxY; y++) {
+            for (int x = minX; x <= maxX; x++) {
+                T value = _data.get(new Point(x, y));
+                String show;
+                if (value == null) show = ".";
+                else show = value.toString();
+                System.out.print(show + " ");
+            }
+            System.out.println("");
+        }
+    }
     public List<Point> getAllDataMatching(T m){
         var result = new ArrayList<Point>();
         for(Point p: getAllPoints()){

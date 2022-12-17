@@ -22,6 +22,13 @@ public class Point {
         this.x = p.x;
         this.y = p.y;
     }
+
+    public Point(String coords){
+        var s = coords.split(",");
+        this.x = Integer.parseInt(s[0].trim());
+        this.y = Integer.parseInt(s[1].trim());
+
+    }
     public List<Point> trail(Point destination){
         List<Point> result = new ArrayList<>();
         var xRange = ArrayHelper.getRange(x, destination.x);
