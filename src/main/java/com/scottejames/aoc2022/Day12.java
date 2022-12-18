@@ -31,7 +31,7 @@ public class Day12 extends AbstractDay {
     @Override
     public String solvePart2() {
         List<Point> allA = grid.getAllDataMatching('a');
-        int distance = allA.parallelStream().mapToInt(p -> length(p,grid)).min().orElseThrow();
+        int distance = allA.stream().mapToInt(p -> length(p,grid)).min().orElseThrow();
         return String.valueOf(distance);
     }
     private void parse(List<String> input) {
